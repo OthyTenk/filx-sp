@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
     
-    const filePath = join('/', 'tmp', file.name)
+    const filePath = join(process.cwd(), 'public', file.name)
     await writeFile(filePath, buffer)
     console.log('File saved to', filePath)
 
