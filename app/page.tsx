@@ -1,30 +1,30 @@
-'use client';
-import { FormEvent, useState } from 'react';
+"use client";
+import { FormEvent, useState } from "react";
 
 export default function Home() {
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useState<File>();
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!file) return
+    e.preventDefault();
+    if (!file) return;
 
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      })
-      const data = await res.json()
-      console.log(data)
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      console.log(data);
 
       if (!data.success) {
-        throw new Error(await data.message)
+        throw new Error(await data.message);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
