@@ -21,18 +21,14 @@ export async function POST(request: NextRequest) {
 
   const filePath = join(process.cwd(), "public", file.name);
   const result = await writeFile(filePath, buffer);
-  console.log("File saved to", filePath);
 
-  console.log("result ", result);
-
-  const allDatas = await readFile(filePath, { encoding: "utf8" });
-
+  const allData = await readFile(filePath, { encoding: "utf16le", flag: "r" });
   let fileIndex = 0;
   let indexCount = 0;
 
   let lines: string[] = [];
 
-  allDatas.split("\n").forEach((line, index) => {
+  allData.split("\n").forEach((line: string, index: number) => {
     lines.push(line);
 
     if (indexCount === 999 || index === lines.length - 1) {
