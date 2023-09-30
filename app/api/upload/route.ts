@@ -25,9 +25,7 @@ export async function POST(request: NextRequest) {
 
   console.log("result ", result);
 
-  const allDatas = await readFile(filePath, {
-    encoding: "utf-8",
-  });
+  const allDatas = await readFile(filePath, { encoding: "utf8" });
 
   let fileIndex = 0;
   let indexCount = 0;
