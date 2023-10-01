@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   let lines: string[] = [];
 
   allData.split("\n").forEach((line: string, index: number) => {
-    lines.push(`insert into dict(val) values("${line}");`);
+    lines.push(`INSERT INTO dict(val) VALUES("${line}");`);
 
     if (indexCount === 999 || index === lines.length - 1) {
       writeLines(lines, fileIndex);
