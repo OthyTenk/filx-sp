@@ -29,13 +29,13 @@ export async function POST(request: NextRequest) {
   let lines: string[] = [];
 
   allData.split("\n").forEach((line: string, index: number) => {
-    const lineTemp = line.trim().replace(/¶/g, "");
+    const lineTemp = line.trim().replace(/¶/g, "").replace(/'/g, "&apos;");
     const separated = lineTemp.split(") ");
     lines.push(
       `INSERT INTO wpcc_name_directory_name(directory, published, letter, name, description) VALUES(2,1,'${line[0]}','${separated[0]})','${separated[1]}');`
     );
 
-    if (indexCount === 299 || index === lines.length - 1) {
+    if (indexCount === 599 || index === lines.length - 1) {
       writeLines(lines, fileIndex);
       fileIndex++;
       indexCount = 0;
