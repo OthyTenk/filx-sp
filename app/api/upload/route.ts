@@ -27,7 +27,10 @@ export async function POST(request: NextRequest) {
 
   let lines: string[] = [];
 
-  allData.split("\n").forEach((line: string, index: number) => {
+  const rows = allData.split("\n");
+
+  for (let i = 0; i < rows.length; i++) {
+    const line = rows[i];
     const lineTemp = line.trim().replace(/¶/g, "").replace(/'/g, "&apos;");
     const separated = lineTemp.split(") ");
 
@@ -36,7 +39,7 @@ export async function POST(request: NextRequest) {
         `INSERT INTO wpcc_name_directory_name(directory, published, letter, name, description) VALUES(2,1,'${separated[0][0]}','${separated[0]})','${separated[1]}');`
       );
 
-    if (indexCount === 599 || index === lines.length - 1) {
+    if (indexCount === 599 || i === lines.length - 1) {
       writeLines(lines, fileIndex);
       fileIndex++;
       indexCount = 0;
@@ -44,7 +47,26 @@ export async function POST(request: NextRequest) {
     } else {
       indexCount++;
     }
-  });
+  }
+
+  // allData.split("\n").forEach((line: string, index: number) => {
+  //   const lineTemp = line.trim().replace(/¶/g, "").replace(/'/g, "&apos;");
+  //   const separated = lineTemp.split(") ");
+
+  //   separated[0] !== ")" &&
+  //     lines.push(
+  //       `INSERT INTO wpcc_name_directory_name(directory, published, letter, name, description) VALUES(2,1,'${separated[0][0]}','${separated[0]})','${separated[1]}');`
+  //     );
+
+  //   if (indexCount === 599 || index === lines.length - 1) {
+  //     writeLines(lines, fileIndex);
+  //     fileIndex++;
+  //     indexCount = 0;
+  //     lines = [];
+  //   } else {
+  //     indexCount++;
+  //   }
+  // });
   console.log(`Used ${process.memoryUsage().heapUsed / 1024 / 1024} MB`);
 
   return NextResponse.json({ success: true, message: "File uploaded" });
